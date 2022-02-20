@@ -1594,7 +1594,6 @@ GameObject:
   m_Component:
   - component: {fileID: 282924683}
   - component: {fileID: 282924682}
-  - component: {fileID: 282924681}
   - component: {fileID: 282924680}
   - component: {fileID: 282924679}
   m_Layer: 0
@@ -2290,24 +2289,6 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   untilNext: 0
---- !u!114 &282924681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 282924678}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12808e95d3ceffa49ba0b8e62ca3c019, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnManager: {fileID: 282924682}
-  turnTimer: {fileID: 282924680}
-  track: {fileID: 881264891}
-  turnLength: 140548
-  startDelay: 279360
-  clearOnGenerate: 1
 --- !u!114 &282924682
 MonoBehaviour:
   m_ObjectHideFlags: 0
