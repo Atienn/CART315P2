@@ -101,11 +101,13 @@ public class TurnManager : MonoBehaviour
     }
 
     public void CombatEndLose() {
+        player.render.enabled = false;
         CombatLog.Instance.Log(enemy.entityName + " wins.");
         onLose.Invoke();
     }
 
     public void CombatEndWin() {
+        enemy.render.enabled = false;
         CombatLog.Instance.Log(player.entityName + " wins.");
         onWin.Invoke();
     }
