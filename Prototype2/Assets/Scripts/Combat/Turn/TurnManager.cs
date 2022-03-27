@@ -93,6 +93,7 @@ public class TurnManager : MonoBehaviour
             music.pitch = Mathf.MoveTowards(music.pitch, 0, 0.02f);
             yield return new WaitForFixedUpdate();
         }
+        music.Pause();
     }
 
     public void CombatEnd() {

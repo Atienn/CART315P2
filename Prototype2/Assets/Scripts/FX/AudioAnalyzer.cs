@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class AudioAnalyzer : MonoBehaviour {
 
     [Header("Source")]
-    [SerializeField] AudioSource source;
+    public AudioSource source;
     [SerializeField] short samplesFetchAmt;
     [SerializeField] short samplesDisplayAmt;
     [SerializeField] byte sampleChannel;
@@ -17,11 +17,11 @@ public class AudioAnalyzer : MonoBehaviour {
 
     float[] spectrum;
     float[] spectrumRedux;
-    //float[] spectrumReduxMax;
     Vector3[] wfVerticiesBase;
     Vector3[] wfVerticiesCurr;
     byte reduceFactor;
-    [HideInInspector] public float amplitude;
+    private float amplitude;
+    public float Amplitude { get { return amplitude; } }
 
     [Header("Waveform")]
     [SerializeField] LineRenderer waveform;
@@ -59,11 +59,12 @@ public class AudioAnalyzer : MonoBehaviour {
             WaveFormStrat = WaveFormDirect;
         }
 
+        //Initialize the base array of verticies (forms a circle).
         for (short i = 0; i < wfVerticiesBase.Length; i++) {
             wfVerticiesBase[i] =
                 new Vector3(
-                    baseSize * Mathf.Sin(2 * Mathf.PI * i / samplesDisplayAmt),
                     baseSize * Mathf.Cos(2 * Mathf.PI * i / samplesDisplayAmt),
+                    -baseSize * Mathf.Sin(2 * Mathf.PI * i / samplesDisplayAmt),
                     0
                 );
         }
@@ -73,6 +74,7 @@ public class AudioAnalyzer : MonoBehaviour {
         waveform.positionCount = samplesDisplayAmt;
         waveform.SetPositions(wfVerticiesBase);
     }
+
 
 
     void Update() {

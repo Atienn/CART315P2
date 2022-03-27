@@ -22,6 +22,6 @@ public class MoveWithAmplitude : MonoBehaviour
         Vector2 distance = basePosition - position.anchoredPosition;
         position.anchoredPosition += distance * distance.magnitude * 0.001f;
 
-        position.anchoredPosition += moveDir * analyzer.amplitude * multiplier;
+        position.anchoredPosition += moveDir * analyzer.Amplitude * multiplier;
     }
 }

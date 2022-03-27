@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardMvmtCtrl : MvmtCtrl
+public class KeyboardMvmtCtrl : MovementControl
 {
     [SerializeField] Transform cam;
     Vector3 dirInput;
 
-    public override Vector3 GetDir()
+    public override Vector3 GetDirection()
     {
         dirInput =
             cam.forward * Input.GetAxisRaw("Vertical") +
@@ -19,12 +19,12 @@ public class KeyboardMvmtCtrl : MvmtCtrl
         return dirInput;
     }
 
-    public override bool GetSpecial1()
+    public override bool GetAction1()
     {
         return Input.GetKeyDown(KeyCode.Space);
     }
 
-    public override bool GetSpecial2() {
+    public override bool GetAction2() {
         return Input.GetKeyDown(KeyCode.LeftShift);
     }
 }

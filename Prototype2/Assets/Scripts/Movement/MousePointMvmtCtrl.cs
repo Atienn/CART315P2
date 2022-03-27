@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MousePointMvmtCtrl : MvmtCtrl
+public class MousePointMvmtCtrl : MovementControl
 {
     [SerializeField] Camera cam;
     Vector3 dirInput;
@@ -10,7 +10,7 @@ public class MousePointMvmtCtrl : MvmtCtrl
     Ray pointRay;
     RaycastHit hitInfo;
 
-    public override Vector3 GetDir() {
+    public override Vector3 GetDirection() {
         pointRay = cam.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(pointRay, out hitInfo)) {
@@ -21,11 +21,11 @@ public class MousePointMvmtCtrl : MvmtCtrl
         else return Vector3.zero;
     }
 
-    public override bool GetSpecial1() {
+    public override bool GetAction1() {
         return Input.GetMouseButtonDown(0);
     }
 
-    public override bool GetSpecial2() {
+    public override bool GetAction2() {
         return Input.GetMouseButton(1);
     }
 }
