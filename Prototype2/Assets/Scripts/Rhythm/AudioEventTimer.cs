@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class AudioEventTimer : MonoBehaviour
 {
-    public AudioSource source;
+    AudioSource source;
 
     //Treated as a stack.
     public List<TimedEvent> events;
@@ -16,6 +16,8 @@ public class AudioEventTimer : MonoBehaviour
 
     void Start()
     {
+        source = CombatAudio.Instance.source;
+
         TimedEvent last = null;
         foreach (TimedEvent ev in events) {
             //        \\       //        \\   <-- support beams

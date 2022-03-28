@@ -3065,7 +3065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da41c9935e3144f4b8396a0b9b3932e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combat: {fileID: 1024065857}
   entityName: FRAGILE
   maxEnergy: 75
   maxTension: 85
@@ -6400,7 +6399,6 @@ MonoBehaviour:
   samplesFetchAmt: 1024
   samplesDisplayAmt: 128
   sampleChannel: 0
-  amplitude: 0
   waveform: {fileID: 980992963}
   visualScaling: 60
   baseSize: 1
@@ -6475,7 +6473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2984057e70d5d29459531f29bb7aedfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 1250031197}
   events:
   - time: 31531
     trigger:
@@ -6746,7 +6743,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2984057e70d5d29459531f29bb7aedfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 1250031197}
   events:
   - time: 504504
     trigger:
@@ -7354,9 +7350,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 500264505}
-  enemy: {fileID: 1309677067}
+  enemy: {fileID: 0}
   balanceGauge: {fileID: 774801157}
-  music: {fileID: 1250031197}
   turnTimer: {fileID: 1024065855}
   beatTimer: {fileID: 1024065854}
   beats:
@@ -8990,10 +8985,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1309677065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13edbfbfe734548489a0162d9f5da429, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a23807f5ef989d4f80bc86f4b8c8b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combat: {fileID: 1024065857}
   entityName: IDLE
   maxEnergy: 0
   maxTension: 0

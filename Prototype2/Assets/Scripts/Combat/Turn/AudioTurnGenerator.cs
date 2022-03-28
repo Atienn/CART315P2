@@ -7,12 +7,12 @@ using UnityEditor.Events;
 [ExecuteInEditMode]
 public class AudioTurnGenerator : MonoBehaviour
 {
-    [SerializeField] TurnManager turnManager;
     [SerializeField] AudioEventTimer turnTimer;
     [SerializeField] AudioSource track;
 
     [SerializeField] int turnLength;
     [SerializeField] int startDelay;
+    [SerializeField] bool startWith = false;
     [SerializeField] bool clearOnGenerate = true;
 
     private void Start() {
@@ -26,14 +26,13 @@ public class AudioTurnGenerator : MonoBehaviour
             turnTimer.events.Clear();
         }
 
-        bool nextTurn = false;
         for(int i = startDelay; i < track.clip.samples; i += turnLength) {
             UnityEvent ev = new UnityEvent();
-            UnityEventTools.AddBoolPersistentListener(ev, new UnityAction<bool>(turnManager.TurnChange), nextTurn);
+            UnityEventTools.AddBoolPersistentListener(ev, new UnityAction<bool>(TurnManager.Instance.TurnChange), startWith);
 
             turnTimer.events.Add(new TimedEvent { time = i, trigger = ev });
 
-            nextTurn = !nextTurn;
+            startWith = !startWith;
         }
 
         this.enabled = false;

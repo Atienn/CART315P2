@@ -7,23 +7,26 @@ using UnityEngine.Events;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
-    [SerializeField] KeyCode NextKey;
-    [SerializeField] KeyCode ExitKey;
+    [SerializeField] KeyCode actKey;
 
+    [Header("Dialog Box")]
     [SerializeField] GameObject dialogBox;
-
     [SerializeField] TMP_Text titleText;
     [SerializeField] TMP_Text mainText;
 
-    [SerializeField] Button choiceBtn1;
-    [SerializeField] Button choiceBtn2;
-    [SerializeField] TMP_Text choiceName1;
-    [SerializeField] TMP_Text choiceName2;
+    [Header("Action Button")]
+    [SerializeField] Button actionBtn;
+    [SerializeField] TMP_Text actionText;
 
     DialogueData data;
     int index;
-    bool onChoice;
 
+
+    private void Update() {
+        if(Input.GetKeyDown(actKey)) {
+            actionBtn.onClick.Invoke();
+        }
+    }
 
     public bool StartDialogue(DialogueData newData) {
         if(this.enabled) {
@@ -43,7 +46,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
     //Returns if dialogue has ended.
     public bool NextPage() {
-        if (onChoice) { return false; } 
         
         //Advance to next page and check if still within page boundaries.
         if(++index < data.pages.Length) {
@@ -70,6 +72,10 @@ public class DialogueManager : Singleton<DialogueManager>
         titleText.text = "";
         mainText.text = "";
         data = null;
+
+        actionBtn.gameObject.SetActive(false);
+        actionText.text = "";
+        actionBtn.onClick.RemoveAllListeners();
     }
 
     //Returns if diaogue has ended.
@@ -82,31 +88,17 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
 
-    public void SetChoice(ChoiceHolder choice) {
-        choiceName1.text = choice.choiceName1;
-        choiceName2.text = choice.choiceName2;
+    public void SetAction(ActionHolder action) {
+        actionText.text = action.actionText;
 
-        choiceBtn1.gameObject.SetActive(true);
-        choiceBtn2.gameObject.SetActive(true);
-
-        choiceBtn1.onClick.AddListener(() => choice.onChoose1.Invoke());
-        choiceBtn2.onClick.AddListener(() => choice.onChoose2.Invoke());
-
-        onChoice = true;
+        actionBtn.gameObject.SetActive(true);
+        actionBtn.onClick.AddListener(() => action.onAct.Invoke());
     }
 
 
     public void SelectChoice() {
-        choiceName1.text = "";
-        choiceName2.text = "";
-
-        choiceBtn1.gameObject.SetActive(false);
-        choiceBtn2.gameObject.SetActive(false);
-
-        choiceBtn1.onClick.RemoveAllListeners();
-        choiceBtn2.onClick.RemoveAllListeners();
-
-        onChoice = false;
-        NextPage();
+        actionBtn.gameObject.SetActive(false);
+        actionText.text = "";
+        actionBtn.onClick.RemoveAllListeners();
     }
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 namespace Misc
 {
     public delegate void VoidStrategy();
-    public delegate void VectorInStrategy(Vector3 v);
+    public delegate bool BoolStrategy();
+
+    public delegate void VectorParamStrategy(Vector3 v);
 
     public static class StandardMethods
     {

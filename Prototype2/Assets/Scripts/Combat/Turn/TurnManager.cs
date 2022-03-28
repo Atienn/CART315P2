@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TurnManager : MonoBehaviour
+public class TurnManager : Singleton<TurnManager>
 {
     bool turn = false;
 
     public CombatEntity player;
     public CombatEntity enemy;
-    [SerializeField] SliderGauge balanceGauge;
+    public SliderGauge balanceGauge;
+    [SerializeField] ImageGauge trackGauge;
 
-    public AudioSource music;
     [SerializeField] AudioEventTimer turnTimer;
     [SerializeField] AudioEventTimer beatTimer;
     [SerializeField] GameObject[] beats = new GameObject[4];
@@ -19,9 +19,9 @@ public class TurnManager : MonoBehaviour
     [SerializeField] UnityEvent onWin;
     [SerializeField] UnityEvent onLose;
 
-
-    void Start() {
-        
+    protected override void Start() {
+        base.Start();
+        trackGauge.maxValue = CombatAudio.Instance.source.clip.length;
     }
 
     public void TurnChange(bool next) {
@@ -47,7 +47,7 @@ public class TurnManager : MonoBehaviour
                     tempEvent.AddListener(enemy.Act);
                 }
 
-                beatTimer.AddEventBack((beats.Length - i) * beatLength + turnTimer.source.timeSamples, tempEvent);
+                beatTimer.AddEventBack((beats.Length - i) * beatLength + CombatAudio.Instance.source.timeSamples, tempEvent);
             }
             enemy.OnTurn();
         }
@@ -62,13 +62,15 @@ public class TurnManager : MonoBehaviour
                 //Required as not to capture variable i which will change.
                 short j = i;
                 tempEvent.AddListener(delegate { beats[j].SetActive(false); });
-                beatTimer.AddEventBack((i + 1) * beatLength + turnTimer.source.timeSamples, tempEvent);
+                beatTimer.AddEventBack((i + 1) * beatLength + CombatAudio.Instance.source.timeSamples, tempEvent);
             }
             player.OnTurn();
         }
+
+        trackGauge.SetTargetOnly(trackGauge.maxValue - CombatAudio.Instance.source.time);
     }
 
-    public void OffsetDominant(int offset) {
+    public void OffsetBalance(int offset) {
         balanceGauge.SetTarget(balanceGauge.target + offset);
     }
 
@@ -76,7 +78,7 @@ public class TurnManager : MonoBehaviour
 
     public void CombatEndDeath() {
 
-        StartCoroutine(StopMusic());
+        CombatAudio.Instance.PauseAudio();
 
         turnTimer.enabled = false;
         turnTimer.events.Clear();
@@ -88,13 +90,7 @@ public class TurnManager : MonoBehaviour
         onLose.Invoke();
     }
 
-    IEnumerator<WaitForFixedUpdate> StopMusic() {
-        while(music.pitch > 0) {
-            music.pitch = Mathf.MoveTowards(music.pitch, 0, 0.02f);
-            yield return new WaitForFixedUpdate();
-        }
-        music.Pause();
-    }
+
 
     public void CombatEnd() {
         if(balanceGauge.target > 0) { CombatEndWin(); }
