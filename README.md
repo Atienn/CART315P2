@@ -2,4 +2,4 @@
 
 Ideally, play the prototype before looking at the playtest questions.
 
-Start from the "Tutorial" scene.
+Start from the "Wanderer" scene.
