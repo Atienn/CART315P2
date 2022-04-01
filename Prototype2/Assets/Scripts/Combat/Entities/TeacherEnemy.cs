@@ -29,7 +29,7 @@ public class TeacherEnemy : Enemy
 
     protected override void Start() {
         base.Start();
-        objectiveChecks = new BoolStrategy[] { Free, Free, HasStruck, Free, HasCast, Free, Free, HasHealed, Free, Free, StartBalanceTest, IsBalancePositive, Free };
+        objectiveChecks = new BoolStrategy[] { Free, Free, HasStruck, Free, HasCast, Free, Free, HasHealed, Free, Free, StartBalanceTest, IsBalancePositive };
         attacks = false;
         i = 0;
     }

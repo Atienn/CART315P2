@@ -60,17 +60,17 @@ public class MultiplyStrike : Effect {
 }
 
 public class EvadePeriodic : Effect {
-    int amount;
-    int current;
+    protected int period;
+    protected int current;
 
-    public EvadePeriodic(int amount, CombatEntity target, int duration) : base(target, duration) {
-        this.amount = amount;
-        this.current = amount;
+    public EvadePeriodic(int time, int startDelay, CombatEntity target, int duration) : base(target, duration) {
+        this.period = time;
+        this.current = startDelay;
     }
 
     public override Attack AffectOnHit(Attack atk) {
         if(--current <= 0) {
-            current = amount;
+            current = period;
             atk.damage = 0;
             //atk.extra.Clear();
             CombatLog.Instance.Log(target.entityName + " avoids the attack");

@@ -5,24 +5,21 @@ using UnityEngine;
 
 public class Enemy : CombatEntity
 {
-    [SerializeField] ImageGauge trackGauge;
+    [SerializeField] ImageGauge energyGauge;
     
 
     protected override void Start() {
         base.Start();
-        //trackGauge.maxValue = CombatAudio.Instance.source.clip.length;
+        energyGauge.maxValue = this.maxEnergy;
+        energyGauge.SetTargetAndText(this.energy);
     }
 
-    public override void Act() {
-
-    }
-
-    private void FixedUpdate() {
-        //trackGauge.SetTargetOnly(trackGauge.maxValue - combat.music.time);
-    }
+    public override void Act() { }
 
     public override void OnHit(Attack receiving) {
         base.OnHit(receiving);
+
+        energyGauge.SetTargetAndText(this.energy);
         combat.OffsetBalance(receiving.damage);
     }
 }

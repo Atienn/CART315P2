@@ -93,7 +93,7 @@ public class Player : CombatEntity {
         TryCast(30, new MultiplyStrike(2, this, 7));
     }
     void CastFear() {
-        TryCast(45, new EvadePeriodic(2, this, 4));
+        TryCast(45, new EvadePeriodic(2, 0, this, 4));
     }
     void CastEnvy() {
         TryCast(20, new GainExtra(10, 6, this, 6));

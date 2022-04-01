@@ -9,16 +9,17 @@ public abstract class CombatEntity : MonoBehaviour {
 
     [Space]
     public string entityName;
-    public int energy;
-    public int tension;
 
     [Space]
+    public int energy;
     public int maxEnergy;
     [Space]
-    public int maxTension;
+    public int tension;
     public int tensionGain;
+    public int maxTension;
     [Space]
     public int strikePow;
+    [Space]
 
     public Image render;
     [SerializeField] protected TextList effectTextList;
