@@ -12,6 +12,7 @@ public class DialogueManager : Singleton<DialogueManager>
     [Header("Dialog Box")]
     [SerializeField] GameObject dialogBox;
     [SerializeField] TMP_Text titleText;
+    [SerializeField] TMP_Text standText;
     [SerializeField] TMP_Text mainText;
 
     [Header("Action Button")]
@@ -34,6 +35,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
 
         titleText.text = newData.title;
+        standText.text = $"({newData.standing})";
         data = newData;
         index = -1;
         NextPage();
@@ -70,6 +72,7 @@ public class DialogueManager : Singleton<DialogueManager>
         AudioManager.Instance.ResumeBackground();
 
         titleText.text = "";
+        standText.text = "";
         mainText.text = "";
         data = null;
 

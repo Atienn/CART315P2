@@ -7,7 +7,7 @@ public abstract class CombatEntity : MonoBehaviour {
 
     protected TurnManager combat;
 
-    [Space]
+    [Header("Entity")]
     public string entityName;
 
     [Space]
@@ -57,17 +57,20 @@ public abstract class CombatEntity : MonoBehaviour {
     }
     public virtual void OnStrikeFail() { }
 
-    public virtual void OnHit(Attack receiving) {
-        //Modify the attack with all effects that apply.
-        this.statusEffects.ForEach(e => e.AffectOnHit(receiving));
+    public virtual void OnHit(Attack receiving, bool applyEffects = true) {
+        if(applyEffects) {        
+            //Modify the attack with all effects that apply.
+            this.statusEffects.ForEach(e => e.AffectOnHit(receiving));
+        }
 
         this.energy -= receiving.damage;
         receiving.sender.OnStrikeSuccess();
 
-        StartCoroutine(Flash(2));
-        CombatLog.Instance.Log($"{receiving.sender.entityName} strikes {this.entityName} for {receiving.damage}.");
+        HitFlash();
+        if(applyEffects) {
+            CombatLog.Instance.Log($"{receiving.sender.entityName} strikes {this.entityName} for {receiving.damage}.");
+        }
     }
-    //Should have an OnStrikeSuccess() event instead.
 
 
     public virtual void OnHeal(int amount) {
@@ -120,6 +123,7 @@ public abstract class CombatEntity : MonoBehaviour {
         //If the effect wasn't found or it can stack, add it to the list.
         statusEffects.Add(newEffect);
         newEffect.OnEffectStart();
+        effectTextList.AddLast(newEffect.ToString());
         return true;
     }
 
@@ -137,5 +141,10 @@ public abstract class CombatEntity : MonoBehaviour {
             render.enabled = true;
             yield return new WaitForSeconds(0.15f);
         }
+    }
+
+    public void HitFlash() {
+        StopAllCoroutines();
+        StartCoroutine(Flash(2));
     }
 }

@@ -45,14 +45,14 @@ public abstract class Effect
 #region Player Effects
 
 public class MultiplyStrike : Effect {
-    float multiplier;
+    float strikeMultiplier;
 
     public MultiplyStrike(float multiplier, CombatEntity target, int duration) : base(target, duration) {
-        this.multiplier = multiplier;
+        strikeMultiplier = multiplier;
     }
 
     public override Attack AffectOnStrike(Attack atk) {
-        atk.damage = (int)(atk.damage * multiplier);
+        atk.damage = (int)(atk.damage * strikeMultiplier);
         return atk;
     }
 
@@ -98,4 +98,60 @@ public class GainExtra : Effect {
 
     public override string Name() { return "ENVY"; }
 }
+#endregion
+
+
+
+#region Enemy Effects
+
+public class Telegraph : Effect {
+    public Telegraph(CombatEntity target, int duration) : base(target, duration) { }
+    public override void OnEffectStart() {
+        CombatLog.Instance.Log(target.entityName + " is charging something big!");
+    }
+    public override void OnEffectEnd() { }
+    public override string Name() { return "CHARGING"; }
+}
+
+public class MultiplyStrikeInOut : MultiplyStrike {
+    float hitMultiplier;
+    public MultiplyStrikeInOut(float multiplyIn, float multiplyOut, CombatEntity target, int duration) : base(multiplyOut, target, duration) {
+        hitMultiplier = multiplyIn;
+    }
+
+    public override Attack AffectOnHit(Attack atk) {
+        atk.damage = (int)(atk.damage * hitMultiplier);
+        return atk;
+    }
+
+    public override string Name() { return "WEAK"; }
+}
+
+public class SendBackDamage : Effect {
+    float multiplier;
+
+    public SendBackDamage(float multiplier, CombatEntity target, int duration) : base(target, duration) {
+        this.multiplier = multiplier;
+    }
+
+    public override Attack AffectOnHit(Attack atk) {
+        target.OnHit(atk, false);
+        CombatLog.Instance.Log("Damage applies to all linked entities!");
+
+        return atk;
+    }
+
+    public override void OnEffectStart() {
+        CombatLog.Instance.Log("Both parties are linked!");
+    }
+    public override string Name() { return "LINKED"; }
+}
+
+public class SendBackDamageNoLog : SendBackDamage {
+    public SendBackDamageNoLog(float multiplier, CombatEntity target, int duration) : base(multiplier, target, duration) { }
+
+    public override void OnEffectStart() { }
+    public override void OnEffectEnd() { }
+}
+
 #endregion

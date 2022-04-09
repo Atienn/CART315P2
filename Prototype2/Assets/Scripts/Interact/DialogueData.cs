@@ -6,6 +6,7 @@ using UltEvents;
 [Serializable]
 public class DialogueData {
     [SerializeField] public string title;
+    [SerializeField] public string standing;
     [SerializeField] public DialoguePages[] pages;
 }
 

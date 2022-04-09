@@ -4,6 +4,10 @@ using UltEvents;
 using UnityEngine.Events;
 
 public class DialogueInteractable : Interactable {
+    [Space]
+    [SerializeField] UltEvent onStart;
+    [SerializeField] UltEvent onEnd;
+
     [Header("Dialogue")]
     [SerializeField] AudioClip theme;
     [SerializeField] float volume;
@@ -27,6 +31,7 @@ public class DialogueInteractable : Interactable {
                 active = true;
 
                 AudioManager.Instance.PlayTheme(theme, volume);
+                onStart.Invoke();
             }
         }
     }
@@ -40,6 +45,8 @@ public class DialogueInteractable : Interactable {
         active = false;
         target.locked = false;
         target = null;
+
+        onEnd.Invoke();
     }
 }
 

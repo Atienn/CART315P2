@@ -1,0 +1,8 @@
+- Tutorial			[ ]
+- Encounter Mechanics		[ ]
+- Environment			[/]
+- Player Animation		[/]
+- Choices in Dialog		[/]
+- Heal in Dialog		[ ]
+- Post Procesing?		[ ]
+- Runner Anim Matches Music	[/]

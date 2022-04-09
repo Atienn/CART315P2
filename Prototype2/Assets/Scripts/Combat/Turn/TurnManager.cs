@@ -104,8 +104,13 @@ public class TurnManager : Singleton<TurnManager>
     }
 
     public void CombatEndWin() {
+        SavePlayerEnergy();
         enemy.render.enabled = false;
         CombatLog.Instance.Log(player.entityName + " wins.");
         onWin.Invoke();
+    }
+
+    public void SavePlayerEnergy() {
+        Blackboard.PlayerInfo.energy = player.energy;
     }
 }

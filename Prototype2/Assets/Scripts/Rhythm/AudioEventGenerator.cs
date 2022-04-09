@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+#if (UNITY_EDITOR) 
+
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEditor.Events;
 
 [ExecuteInEditMode]
 public class AudioEventGenerator : MonoBehaviour
@@ -39,3 +38,5 @@ public class AudioEventGenerator : MonoBehaviour
 
     public void SampleMethod() { }
 }
+
+#endif

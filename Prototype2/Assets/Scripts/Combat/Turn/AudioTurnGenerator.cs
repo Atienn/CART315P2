@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+#if (UNITY_EDITOR)
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor.Events;
@@ -38,3 +38,5 @@ public class AudioTurnGenerator : MonoBehaviour
         this.enabled = false;
     }
 }
+
+#endif

@@ -37,8 +37,7 @@ public class Runner : Entity
 
     #endregion
 
-    void Start()
-    {
+    void Start() {
         input = GetComponent<MovementControl>();
         charCtrl = GetComponent<CharacterController>();
 
@@ -46,7 +45,10 @@ public class Runner : Entity
         anim = GetComponent<Animator>();
         stateCode = anim.parameters[0].nameHash;
 
+        velocity = new Vector3(0, gravity, 0);
         mvmtMode = AirFallMvmt;
+
+        transform.position = Blackboard.PlayerInfo.position;
     }
 
     void Update()

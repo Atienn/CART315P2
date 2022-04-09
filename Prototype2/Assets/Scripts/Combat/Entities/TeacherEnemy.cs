@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class TeacherEnemy : Enemy 
 {
-
+    [Header("Mentor")]
     [SerializeField] Message[] objectiveMsgs = { };
     BoolStrategy[] objectiveChecks;
 
@@ -23,7 +23,7 @@ public class TeacherEnemy : Enemy
 
     bool wasHit;
     int lastEnergy;
-    int lastStatusCount;
+    int lastTension;
 
     bool attacks;
 
@@ -35,6 +35,7 @@ public class TeacherEnemy : Enemy
     }
 
     public override void Act() {
+
         if(i < objectiveChecks.Length) {
 
             if (objectiveChecks[i]()) {
@@ -58,22 +59,23 @@ public class TeacherEnemy : Enemy
         }
         else {
             CombatLog.Instance.Log(entityName + " waits.");
-
-            wasHit = false;
-            lastEnergy = combat.player.energy;
-            lastStatusCount = combat.player.statusEffects.Count;
         }
+
+        wasHit = false;
+        lastEnergy = combat.player.energy;
+        lastTension = combat.player.tension;
     }
 
-    public override void OnHit(Attack receiving) {
+    public override void OnHit(Attack receiving, bool applyEffects = true) {
+        base.OnHit(receiving, applyEffects);
         wasHit = true;
-        base.OnHit(receiving);
     }
 
 
     bool Free() { return true; }
     bool HasStruck() { return wasHit; }
-    bool HasCast() { return lastStatusCount < combat.player.statusEffects.Count; }
+    bool HasCast() {
+        return (lastTension > combat.player.tension) && (lastEnergy >= combat.player.energy); }
     bool HasHealed() { return (lastEnergy + 10 < combat.player.energy) || combat.player.energy >= combat.player.maxEnergy; }
     bool IsBalancePositive() { return combat.balanceGauge.target > 0; }
     bool StartBalanceTest() {
@@ -85,6 +87,7 @@ public class TeacherEnemy : Enemy
 
     public void OnEnd() {
         if(i >= objectiveChecks.Length) {
+            SetCleared();
             onComplete.Invoke();
         }
         else {

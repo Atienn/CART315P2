@@ -18,9 +18,7 @@ public class ImageGauge : MonoBehaviour
     }
 
     void FixedUpdate() {
-        if (gaugeDisplay.fillAmount == target) {
-            this.enabled = false;
-        }
+        if (gaugeDisplay.fillAmount == target) { enabled = false; }
         else {
             gaugeDisplay.fillAmount = Mathf.MoveTowards(gaugeDisplay.fillAmount, target, delta);
         }
@@ -32,17 +30,10 @@ public class ImageGauge : MonoBehaviour
     }
 
     public void SetTargetOnly(float newTarget) {
-        this.enabled = true;
+        if (newTarget > maxValue) { target = 1f; }
+        else if (newTarget < 0) { target = 0f; }
+        else { target = newTarget / maxValue; }
 
-        if (newTarget > maxValue) {
-            newTarget = maxValue;
-            target = 1f;
-        }
-        else if (newTarget < 0) {
-            target = 0f;
-        }
-        else {
-            target = newTarget / maxValue;
-        }
+        enabled = true;
     }
 }
